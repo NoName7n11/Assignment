@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  service1:
+    build: ./service_1
+    container_name: service1
+    expose:
+      - "8001"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8001/ping"]
+      interval: 10s
+      retries: 3
+
+  service2:
+    build: ./service_2
+    container_name: service2
+    expose:
+      - "8002"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/ping"]
+      interval: 10s
+      retries: 3
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8081:80"   # change to 8081
+    depends_on:
+      service1:
+        condition: service_healthy
+      service2:
+        condition: service_healthy
