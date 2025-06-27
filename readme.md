@@ -34,7 +34,7 @@ SourceCodeForDevopsAssignment/
 ### 1. Clone or Download the Project
 
 ```sh
-git clone https://github.com/yourusername/your-repo.git
+git clone https://github.com/shivam/SourceCodeForDevopsAssignment.git
 cd your-repo
 ```
 Or download and extract the ZIP, then open the folder in VS Code.
