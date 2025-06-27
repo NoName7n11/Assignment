@@ -130,5 +130,37 @@ services:
       service2:
         condition: service_healthy
 ```
+# Output
 
----
+Below are screenshots showing the successful output of the project:
+
+![Service 1 Ping Output](output/Screenshot%20(130).png)
+![Service 2 Ping Output](output/Screenshot%20(131).png)
+
+## How These Outputs Are Received
+
+When you open your browser and visit `http://localhost:8081/service1/ping` or `http://localhost:8081/service2/ping`, here’s what happens:
+
+1. **Browser Request:**  
+   You enter the URL in your browser. The request goes to your local machine on port `8081`, where the Nginx container is listening.
+
+2. **Nginx Reverse Proxy:**  
+   Nginx receives the request. Based on its configuration, it checks the path:
+   - If the path starts with `/service1/`, Nginx forwards the request to the `service1` container on port `8001`.
+   - If the path starts with `/service2/`, Nginx forwards the request to the `service2` container on port `8002`.
+
+3. **Service Response:**  
+   Each service has a `/ping` endpoint:
+   - `service1` (Go) responds with `{"status":"ok","service":"1"}`.
+   - `service2` (Python Flask) responds with `{"status":"ok","service":"2"}`.
+
+4. **Nginx Returns the Response:**  
+   Nginx receives the JSON response from the service and sends it back to your browser.
+
+5. **Browser Displays Output:**  
+   The browser displays the JSON output, as shown in the screenshots.
+
+**This process confirms that:**
+- Nginx is running in a Docker container and correctly routing requests.
+- Both backend services are healthy and responding.
+- The full Dockerized stack is working as
